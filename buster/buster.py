@@ -91,7 +91,7 @@ def main():
                 for element in d(share_class):
                     e = PyQuery(element)
                     print "element : ", e
-                    if e.attr('href'):
+                    if e.attr('href') is not None:
                       href = e.attr('href')
                       print "href : ", href
                       print "domain : ", domain
