@@ -54,7 +54,6 @@ def main():
         else:
           domain = 'http://localhost:2368'
         target_domain = arguments['--target_domain']
-        target_domain = re.sub(domain, domain, target_domain)
 
         # remove query string since Ghost 0.4
         file_regex = re.compile(r'.*?(\?.*)')
