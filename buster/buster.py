@@ -89,8 +89,8 @@ def main():
             for share_class in ['.share']:
                 print "share_class : ", share_class
                 for element in d(share_class):
-                    print "element : ", element
                     e = PyQuery(element)
+                    print "element : ", e
                     href = e.attr('href')
                     print "href : ", href
                     print "domain : ", domain
