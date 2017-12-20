@@ -19,6 +19,7 @@ Options:
 
 import os
 import re
+import string
 import sys
 import fnmatch
 import shutil
@@ -89,7 +90,7 @@ def main():
                 for element in d(share_class):
                     e = PyQuery(element)
                     href = e.attr('href')
-                    new_href = re.sub(domain, target_domain, href)
+                    new_href = string.replace(href, domain, target_domain)
                     e.attr('href', new_href)
                     print "\t", href, "=>", new_href
             if parser == 'html':
