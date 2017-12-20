@@ -2,7 +2,7 @@
 
 Usage:
   buster.py setup [--gh-repo=<repo-url>] [--dir=<path>]
-  buster.py generate [--domain=<local-address>] [--dir=<path>]
+  buster.py generate [--domain=<local-address>] [--dir=<path>] [--target_domain=<http://your-host-here>]
   buster.py preview [--dir=<path>]
   buster.py deploy [--dir=<path>]
   buster.py add-domain <domain-name> [--dir=<path>]
@@ -48,6 +48,10 @@ def main():
                    "--restrict-file-name=unix "  # don't escape query string
                    "{0}").format(arguments['--domain'], static_path)
         os.system(command)
+        
+        domain = arguments['--domain']
+        target_domain = arguments['--target_domain']
+        target_domain = re.sub('127\.0\.0\.1', 'localhost',target_domain)
 
         # remove query string since Ghost 0.4
         file_regex = re.compile(r'.*?(\?.*)')
@@ -73,7 +77,23 @@ def main():
             if parser == 'html':
                 return d.html(method='html').encode('utf8')
             return d.__unicode__().encode('utf8')
-
+            
+        def fix_share_links(text,parser):
+            td_regex = re.compile(target_domain + '|' )
+            
+            assert target_domain, "target domain must be specified --target_domain=<http://your-host-url>"
+            d = PyQuery(bytes(bytearray(text, encoding='utf-8')), parser=parser)
+            for share_class in ['.icon-twitter','.icon-facebook','.icon-google-plus']:
+                for element in d(share_class):
+                    e = PyQuery(element)
+                    href = e.attr('href')
+                    new_href = re.sub(domain, target_domain, href)
+                    e.attr('href', new_href)
+                    print "\t", href, "=>", new_href
+            if parser == 'html':
+                return d.html(method='html').encode('utf8')
+            return d.__unicode__().encode('utf8')
+            
         # fix links in all html files
         for root, dirs, filenames in os.walk(static_path):
             for filename in fnmatch.filter(filenames, "*.html"):
@@ -88,6 +108,7 @@ def main():
                     filetext = f.read().decode('utf8')
                 print "fixing links in ", filepath
                 newtext = fixLinks(filetext, parser)
+                newtext = fix_share_links(filetext,parser)
                 with open(filepath, 'w') as f:
                     f.write(newtext)
 
