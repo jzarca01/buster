@@ -86,7 +86,7 @@ def main():
             
             assert target_domain, "target domain must be specified --target_domain=<http://your-host-url>"
             d = PyQuery(bytes(bytearray(text, encoding='utf-8')), parser=parser)
-            for share_class in ['.share_links']:
+            for share_class in ['.share_links a']:
                 print "share_class : ", share_class
                 for element in d(share_class):
                     e = PyQuery(element)
