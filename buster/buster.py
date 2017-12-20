@@ -90,6 +90,8 @@ def main():
                 for element in d(share_class):
                     e = PyQuery(element)
                     href = e.attr('href')
+                    print "domain : ", domain
+                    print "target_domain : ", target_domain
                     new_href = re.sub(domain, target_domain, href)
                     e.attr('href', new_href)
                     print "\t", href, "=>", new_href
