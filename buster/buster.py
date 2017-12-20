@@ -90,7 +90,7 @@ def main():
                 for element in d(share_class):
                     e = PyQuery(element)
                     href = e.attr('href')
-                    new_href = string.replace(href, domain, target_domain)
+                    new_href = href.replace(domain, target_domain)
                     e.attr('href', new_href)
                     print "\t", href, "=>", new_href
             if parser == 'html':
