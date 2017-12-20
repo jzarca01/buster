@@ -49,9 +49,12 @@ def main():
                    "{0}").format(arguments['--domain'], static_path)
         os.system(command)
         
-        domain = arguments['--domain']
+        if arguments['--domain']:
+          domain = arguments['--domain']
+        else:
+          domain = 'http://localhost:2368'
         target_domain = arguments['--target_domain']
-        target_domain = re.sub('127\.0\.0\.1', 'localhost',target_domain)
+        target_domain = re.sub(domain,target_domain)
 
         # remove query string since Ghost 0.4
         file_regex = re.compile(r'.*?(\?.*)')
