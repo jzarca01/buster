@@ -86,7 +86,7 @@ def main():
             
             assert target_domain, "target domain must be specified --target_domain=<http://your-host-url>"
             d = PyQuery(bytes(bytearray(text, encoding='utf-8')), parser=parser)
-            for share_class in ['.icon-twitter','.icon-facebook','.icon-google-plus']:
+            for share_class in ['.share']:
                 for element in d(share_class):
                     e = PyQuery(element)
                     href = e.attr('href')
