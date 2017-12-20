@@ -91,13 +91,14 @@ def main():
                 for element in d(share_class):
                     e = PyQuery(element)
                     print "element : ", e
-                    href = e.attr('href')
-                    print "href : ", href
-                    print "domain : ", domain
-                    print "target_domain : ", target_domain
-                    new_href = re.sub(domain, target_domain, href)
-                    e.attr('href', new_href)
-                    print "\t", href, "=>", new_href
+                    if e.attr('href'):
+                      href = e.attr('href')
+                      print "href : ", href
+                      print "domain : ", domain
+                      print "target_domain : ", target_domain
+                      new_href = re.sub(domain, target_domain, href)
+                      e.attr('href', new_href)
+                      print "\t", href, "=>", new_href
             if parser == 'html':
                 return d.html(method='html').encode('utf8')
             return d.__unicode__().encode('utf8')
