@@ -112,7 +112,7 @@ def main():
                 for element in d(share_class):
                     e = PyQuery(element)
                     print "element : ", e
-                    href = e.attr('content')
+                    content = e.attr('content')
                     print "content : ", content
                     print "domain : ", domain
                     print "target_domain : ", target_domain
