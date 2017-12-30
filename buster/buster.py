@@ -90,13 +90,12 @@ def main():
                 print "share_class : ", share_class
                 for element in d(share_class):
                     e = PyQuery(element)
-                    static_target_domain = target_domain+"/static"
                     print "element : ", e
                     href = e.attr('href')
                     print "href : ", href
                     print "domain : ", domain
-                    print "target_domain : ", static_target_domain
-                    new_href = re.sub(domain, static_target_domain, href)
+                    print "target_domain : ", target_domain
+                    new_href = re.sub(domain, target_domain, href)
                     e.attr('href', new_href)
                     print "\t", href, "=>", new_href
             if parser == 'html':
@@ -108,7 +107,7 @@ def main():
             
             assert target_domain, "target domain must be specified --target_domain=<http://your-host-url>"
             d = PyQuery(bytes(bytearray(text, encoding='utf-8')), parser=parser)
-            for share_class in ['meta']:
+            for share_class in ['meta[property="og:url"]', 'meta[property="og:image"]', 'meta[property="twitter:image"]']:
                 print "share_class : ", share_class
                 for element in d(share_class):
                     e = PyQuery(element)
@@ -119,6 +118,7 @@ def main():
                         print "domain : ", domain
                         print "target_domain : ", target_domain
                         new_content = re.sub(domain, target_domain, content)
+                        new_content = re.sub("/static", "", target_domain)
                         e.attr('content', new_content)
                         print "\t", content, "=>", new_content
             if parser == 'html':
