@@ -90,7 +90,7 @@ def main():
                 print "share_class : ", share_class
                 for element in d(share_class):
                     e = PyQuery(element)
-                    targe_domain+= "/static"
+                    target_domain+= "/static"
                     print "element : ", e
                     href = e.attr('href')
                     print "href : ", href
