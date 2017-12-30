@@ -112,7 +112,7 @@ def main():
                 for element in d(share_class):
                     e = PyQuery(element)
                     print "element : ", e
-                    if e.attr('content') not None:
+                    if e.attr('content'):
                         content = e.attr('content')
                         print "content : ", content
                         print "domain : ", domain
