@@ -95,7 +95,7 @@ def main():
                     print "href : ", href
                     print "domain : ", domain
                     print "target_domain : ", target_domain
-                    new_href = re.sub(domain, target_domain, href)
+                    new_href = re.sub(domain, target_domain+"/static", href)
                     e.attr('href', new_href)
                     print "\t", href, "=>", new_href
             if parser == 'html':
