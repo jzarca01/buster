@@ -123,7 +123,7 @@ def main():
                 return d.html(method='html').encode('utf8')
             return d.__unicode__().encode('utf8')
 
-                def fix_meta_image_links(text,parser):
+        def fix_meta_image_links(text,parser):
             td_regex = re.compile(target_domain + '|' )
             
             assert target_domain, "target domain must be specified --target_domain=<http://your-host-url>"
