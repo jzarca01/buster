@@ -112,13 +112,14 @@ def main():
                 for element in d(share_class):
                     e = PyQuery(element)
                     print "element : ", e
-                    content = e.attr('content')
-                    print "content : ", content
-                    print "domain : ", domain
-                    print "target_domain : ", target_domain
-                    new_content = re.sub(domain, target_domain, content)
-                    e.attr('content', new_content)
-                    print "\t", content, "=>", new_content
+                    if e.attr('content') not None:
+                        content = e.attr('content')
+                        print "content : ", content
+                        print "domain : ", domain
+                        print "target_domain : ", target_domain
+                        new_content = re.sub(domain, target_domain, content)
+                        e.attr('content', new_content)
+                        print "\t", content, "=>", new_content
             if parser == 'html':
                 return d.html(method='html').encode('utf8')
             return d.__unicode__().encode('utf8')
