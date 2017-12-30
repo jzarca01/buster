@@ -101,6 +101,27 @@ def main():
             if parser == 'html':
                 return d.html(method='html').encode('utf8')
             return d.__unicode__().encode('utf8')
+        
+        def fix_meta_links(text,parser):
+            td_regex = re.compile(target_domain + '|' )
+            
+            assert target_domain, "target domain must be specified --target_domain=<http://your-host-url>"
+            d = PyQuery(bytes(bytearray(text, encoding='utf-8')), parser=parser)
+            for share_class in ['meta']:
+                print "share_class : ", share_class
+                for element in d(share_class):
+                    e = PyQuery(element)
+                    print "element : ", e
+                    href = e.attr('content')
+                    print "content : ", content
+                    print "domain : ", domain
+                    print "target_domain : ", target_domain
+                    new_content = re.sub(domain, target_domain, content)
+                    e.attr('content', new_content)
+                    print "\t", content, "=>", new_content
+            if parser == 'html':
+                return d.html(method='html').encode('utf8')
+            return d.__unicode__().encode('utf8')
             
         # fix links in all html files
         for root, dirs, filenames in os.walk(static_path):
@@ -117,6 +138,7 @@ def main():
                 print "fixing links in ", filepath
                 newtext = fixLinks(filetext, parser)
                 newtext = fix_share_links(filetext,parser)
+                newtext = fix_meta_links(filetext,parser)
                 with open(filepath, 'w') as f:
                     f.write(newtext)
 
