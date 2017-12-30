@@ -82,10 +82,11 @@ def main():
             return d.__unicode__().encode('utf8')
             
         def fix_share_links(text,parser):
+            filetext = text.decode('utf8')
             td_regex = re.compile(target_domain + '|' )
             
             assert target_domain, "target domain must be specified --target_domain=<http://your-host-url>"
-            d = PyQuery(bytes(bytearray(text, encoding='utf-8')), parser=parser)
+            d = PyQuery(bytes(bytearray(filetext, encoding='utf-8')), parser=parser)
             for share_class in ['.share_links a']:
                 print "share_class : ", share_class
                 for element in d(share_class):
@@ -103,10 +104,11 @@ def main():
             return d.__unicode__().encode('utf8')
            
         def fix_meta_url_links(text,parser):
+            filetext = text.decode('utf8')
             td_regex = re.compile(target_domain + '|' )
             
             assert target_domain, "target domain must be specified --target_domain=<http://your-host-url>"
-            d = PyQuery(bytes(bytearray(text, encoding='utf-8')), parser=parser)
+            d = PyQuery(bytes(bytearray(filetext, encoding='utf-8')), parser=parser)
             for share_class in ['meta[property="og:url"], meta[name="twitter:url"]']:
                 print "share_class : ", share_class
                 for element in d(share_class):
@@ -124,10 +126,11 @@ def main():
             return d.__unicode__().encode('utf8')
 
         def fix_meta_image_links(text,parser):
+            filetext = text.decode('utf8')
             td_regex = re.compile(target_domain + '|' )
             
             assert target_domain, "target domain must be specified --target_domain=<http://your-host-url>"
-            d = PyQuery(bytes(bytearray(text, encoding='utf-8')), parser=parser)
+            d = PyQuery(bytes(bytearray(filetext, encoding='utf-8')), parser=parser)
             for share_class in ['meta[property="og:image"], meta[name="twitter:image"]']:
                 print "share_class : ", share_class
                 for element in d(share_class):
@@ -160,8 +163,8 @@ def main():
                 print "fixing links in ", filepath
                 newtext = fixLinks(filetext, parser)
                 newtext = fix_share_links(newtext,parser)
-                newtext = fix_meta_image_links(newtext,parser)
                 newtext = fix_meta_url_links(newtext,parser)
+                newtext = fix_meta_image_links(newtext,parser)
                 with open(filepath, 'w') as f:
                     f.write(newtext)
 
