@@ -90,13 +90,13 @@ def main():
                 print "share_class : ", share_class
                 for element in d(share_class):
                     e = PyQuery(element)
-                    target_domain+= "/static"
+                    static_target_domain = target_domain+"/static"
                     print "element : ", e
                     href = e.attr('href')
                     print "href : ", href
                     print "domain : ", domain
-                    print "target_domain : ", target_domain
-                    new_href = re.sub(domain, target_domain, href)
+                    print "target_domain : ", static_target_domain
+                    new_href = re.sub(domain, static_target_domain, href)
                     e.attr('href', new_href)
                     print "\t", href, "=>", new_href
             if parser == 'html':
